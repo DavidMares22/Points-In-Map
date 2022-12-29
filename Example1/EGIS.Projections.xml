@@ -1,0 +1,427 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EGIS.Projections</name>
+    </assembly>
+    <members>
+        <member name="T:EGIS.Projections.CoordinateReferenceSystemFactory">
+            <summary>
+            Factory class with members to assist in creating and transforming between Coordinate Reference Systems (CRS) 
+            </summary>
+            <remarks>
+            <para>
+            To access the factory class use the EGIS.Projections.CoordinateReferenceSystemFactory.Default member
+            </para>
+            <para>
+            To create a CRS from Well Known Text (as stored in a shapefile .prj file) use: <br/>
+            EGIS.Projections.CoordinateReferenceSystemFactory.Default.CreateCRSFromWKT(wktString);
+            <br/>
+            To create a CRS from a EPGS code use: <br/>
+            EGIS.Projections.CoordinateReferenceSystemFactory.Default.GetCRSById(code);
+                
+            </para>
+            <para>
+            To transform coordinates from one CRS to another CRS create a ITransformation object:
+            EGIS.Projections.CoordinateReferenceSystemFactory.Default.CreateCoordinateTrasformation(sourceCRS, targetCRS);
+            <br/> or 
+            <br/>
+            EGIS.Projections.CoordinateReferenceSystemFactory.Default.CreateCoordinateTrasformation(sourceWKT, targetWKT);
+            </para>
+            
+            <para>
+            Internally EGIS uses Proj6 to support CRS operations.<br/>
+            To use EGIS.Projections in your own projects make sure that the "Proj6" directory and all of its contents is 
+            copied to the output directory of your project.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:EGIS.Projections.CoordinateReferenceSystemFactory.coordinateSystems">
+            <summary>
+            key = srid, value = wkt
+            </summary>
+        </member>
+        <member name="P:EGIS.Projections.CoordinateReferenceSystemFactory.Default">
+            <summary>
+            The default ICRSFactory instance.
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.CoordinateReferenceSystemFactory.Wgs84EpsgCode">
+            <summary>
+            EPSG code for WGS84 (World Geodetic System) Ellipsoid
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.CoordinateReferenceSystemFactory.Wgs84PseudoMercatorEpsgCode">
+            <summary>
+            EPSG code for popular Web Mercator projection used for GoogleMaps, MapBox, OSM 
+            </summary>
+        </member>
+        <member name="P:EGIS.Projections.CoordinateReferenceSystemFactory.IdentificationConfidenceThreshold">
+            <summary>
+            Confidence Threshold when identifying a CRS loaded from WKT. Default is 70, meaning two CRSs are equivalent but names are diferent.
+            </summary>
+            <remarks>
+            See proj.org proj_identify function for more detail
+            </remarks>
+        </member>
+        <member name="M:EGIS.Projections.CoordinateReferenceSystemFactory.GetWgs84UtmEpsgCode(System.Double,System.Double)">
+            <summary>
+            Utility function to return the WGS84 UTM EPSG code for a given lat/lon coordinate
+            </summary>
+            <param name="longitude">longitude in decimal degrees</param>
+            <param name="latitude">latitude in decimal degrees</param>
+            <returns></returns>
+        </member>
+        <member name="P:EGIS.Projections.CoordinateReferenceSystemFactory.GeographicCoordinateSystems">
+            <summary>
+            return list of geographic CRS
+            </summary>
+        </member>
+        <member name="P:EGIS.Projections.CoordinateReferenceSystemFactory.ProjectedCoordinateSystems">
+            <summary>
+            return list of projected CRS
+            </summary>
+        </member>
+        <member name="M:EGIS.Projections.CoordinateReferenceSystemFactory.GetCRSById(System.Int32)">
+            <summary>
+            Get a CRS by (EPSG) code
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGIS.Projections.CoordinateReferenceSystemFactory.CreateCRSFromWKT(System.String)">
+            <summary>
+            Creates a ICRS CoordinateReferenceSystem from a well known text string
+            </summary>
+            <param name="wkt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGIS.Projections.CoordinateReferenceSystemFactory.CreateCRSFromPrjFile(System.String)">
+            <summary>
+            Creates a ICRS CoordinateReferenceSystem from an ESRI prj file
+            </summary>
+            <param name="prjFile">path to shapefile .prj file</param>
+            <returns></returns>
+        </member>
+        <member name="M:EGIS.Projections.CoordinateReferenceSystemFactory.CreateCoordinateTrasformation(EGIS.Projections.ICRS,EGIS.Projections.ICRS)">
+            <summary>
+            creates a ICoordinateTransformation object used to transform coordinates
+            from source CRS to target CRS
+            </summary>
+            <param name="source"></param>
+            <param name="target"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGIS.Projections.CoordinateReferenceSystemFactory.CreateCoordinateTrasformation(System.String,System.String)">
+            <summary>
+            creates a ICoordinateTransformation object used to transform coordinates
+            from source CRS to target CRS        
+            </summary>
+            <param name="sourceWKT"></param>
+            <param name="targetWKT"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EGIS.Projections.CoordinateReferenceSystemFactory.WKTString.WKID">
+            <summary>Well-known ID</summary>
+        </member>
+        <member name="F:EGIS.Projections.CoordinateReferenceSystemFactory.WKTString.WKT">
+            <summary>Well-known Text</summary>
+        </member>
+        <member name="T:EGIS.Projections.CRSBoundingBox">
+            <summary>
+            struct defining a Coordinate Reference System's area of use bounding box
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.CRSBoundingBox.WestLongitudeDegrees">
+            <summary>
+            The West longitude of the bounding box or -1000 if unknown
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.CRSBoundingBox.NorthLatitudeDegrees">
+            <summary>
+            The North latitude of the bounding box or -1000 if unknown
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.CRSBoundingBox.EastLongitudeDegrees">
+            <summary>
+            The East longitude of the bounding box or -1000 if unknown
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.CRSBoundingBox.SouthLatitudeDegrees">
+            <summary>
+            The Soouth latitude of the bounding box or -1000 if unknown
+            </summary>
+        </member>
+        <member name="P:EGIS.Projections.CRSBoundingBox.IsDefined">
+            <summary>
+            return whether the CRSBoundingBox is defined. If the CRSBoundingBox is undefined then 
+            West, North, East or South will be -1000
+            </summary>
+        </member>
+        <member name="M:EGIS.Projections.CRSBoundingBox.ToString">
+            <summary>
+            ToString override
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EGIS.Projections.CRSBoundingBox.GetHashCode">
+            <summary>
+            GetHashCode override
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:EGIS.Projections.ICRS">
+            <summary>
+            interface defining a Coordinate Reference System
+            </summary>
+            <remarks>
+            A Coordinate Reference System (CRS) is also known as a Spatial Reference System.
+            </remarks>
+        </member>
+        <member name="P:EGIS.Projections.ICRS.WKT">
+            <summary>
+            Well Known Text representation of the Coordinate Reference System (WKT2 2018 format)
+            </summary>
+        </member>
+        <member name="P:EGIS.Projections.ICRS.Name">
+            <summary>
+            The name of the CRS
+            </summary>
+        </member>
+        <member name="P:EGIS.Projections.ICRS.Id">
+            <summary>
+            The CRS ID (EPSG)
+            </summary>
+        </member>
+        <member name="P:EGIS.Projections.ICRS.Authority">
+            <summary>
+            CRS Authority
+            </summary>
+        </member>
+        <member name="M:EGIS.Projections.ICRS.IsEquivalent(EGIS.Projections.ICRS)">
+            <summary>
+            Tests if the CRS is equivalent to a given CRS
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="P:EGIS.Projections.ICRS.AreaOfUse">
+            <summary>
+            The CRS Area of use. Area of use is defined in geodetic lat/lon coordinates regardless of the 
+            units used by the CRS
+            </summary>
+        </member>
+        <member name="M:EGIS.Projections.ICRS.GetWKT(EGIS.Projections.PJ_WKT_TYPE,System.Boolean)">
+            <summary>
+            Gets the WKT of the CRS in given WKT format
+            </summary>
+            <param name="wktType"></param>
+            <param name="indentText"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EGIS.Projections.IGeographicCRS">
+            <summary>
+            interface defining a Geographic Coordinate Reference System
+            </summary>
+        </member>
+        <member name="T:EGIS.Projections.IProjectedCRS">
+            <summary>
+            interface defining a Projected Coordinate Reference System
+            </summary>
+        </member>
+        <member name="P:EGIS.Projections.IProjectedCRS.UnitsToMeters">
+            <summary>
+            Returns multiplier to convert the Projected CRS units to meters
+            </summary>
+        </member>
+        <member name="T:EGIS.Projections.TransformDirection">
+            <summary>
+            Enumeration defining the direction of a transformation
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.TransformDirection.None">
+            <summary>
+            No transformation is performed
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.TransformDirection.Forward">
+            <summary>
+            Transformation is performed in forward direction, from source CRS to target CRS
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.TransformDirection.Inverse">
+            <summary>
+            Transformation is performed in inverse direction, from target CRS to source CRS
+            </summary>
+        </member>
+        <member name="T:EGIS.Projections.ICoordinateTransformation">
+            <summary>
+            interface defining a Coordinate Transformation used to transform a coordinate from a source CRS
+            to a target CRS.
+            </summary>
+        </member>
+        <member name="P:EGIS.Projections.ICoordinateTransformation.SourceCRS">
+            <summary>
+            The source Coordinate Reference System
+            </summary>
+        </member>
+        <member name="P:EGIS.Projections.ICoordinateTransformation.TargetCRS">
+            <summary>
+            The target/destination Coordinate Reference System
+            </summary>
+        </member>
+        <member name="M:EGIS.Projections.ICoordinateTransformation.Transform(System.Double[],System.Int32,EGIS.Projections.TransformDirection)">
+            <summary>
+            Transforms coordinates in place. The values of the points array will be replaced
+            with transformed coordinates
+            </summary>
+            <param name="points">array of points to be transformed, with each successive x,y pair stored in the array</param>
+            <param name="pointCount">Number of points in points array</param>
+            <param name="direction">The direction of the transformation (default is Forward)</param>
+            <returns>number of points transformed</returns>
+        </member>
+        <member name="M:EGIS.Projections.ICoordinateTransformation.Transform(System.Double[],System.Int32,System.Int32,EGIS.Projections.TransformDirection)">
+            <summary>
+            Transforms coordinates in place. The values of the points array will be replaced
+            with transformed coordinates
+            </summary>
+            <param name="points">array of points to be transformed, with each successive x,y pair stored in the array</param>
+            <param name="startIndex">Index in points of first coordinate</param>
+            <param name="pointCount">Number of points in points array</param>
+            <param name="direction">The direction of the transformation (default is Forward)</param>
+            <returns>number of points transformed</returns>
+        </member>
+        <member name="M:EGIS.Projections.ICoordinateTransformation.Transform(System.Double*,System.Int32,EGIS.Projections.TransformDirection)">
+            <summary>
+            Transforms coordinates in place. The values of the points array will be replaced
+            with transformed coordinates
+            </summary>
+            <param name="points">pointer to array of points to be transformed, with each successive x,y pair stored in the array</param>
+            <param name="pointCount">Number of points in points array</param>
+            <param name="direction">The direction of the transformation (default is Forward)</param>
+            <returns>number of points transformed</returns>
+        </member>
+        <member name="T:EGIS.Projections.ICRSFactory">
+            <summary>
+            Interface defining a Coordinate Reference System Factory
+            </summary>
+        </member>
+        <member name="P:EGIS.Projections.ICRSFactory.GeographicCoordinateSystems">
+            <summary>
+            Returns a list of Geographic Coordinate Reference Systems
+            </summary>
+        </member>
+        <member name="P:EGIS.Projections.ICRSFactory.ProjectedCoordinateSystems">
+            <summary>
+            Returns a list of Projected Coordinate Reference Systems
+            </summary>
+        </member>
+        <member name="M:EGIS.Projections.ICRSFactory.GetCRSById(System.Int32)">
+            <summary>
+            Gets a Coordinate Reference System by EPSG code
+            </summary>
+            <param name="id">EPSG code</param>
+            <returns></returns>
+        </member>
+        <member name="M:EGIS.Projections.ICRSFactory.CreateCRSFromWKT(System.String)">
+            <summary>
+            Create a Coordinate Reference System from Well Known Text
+            </summary>
+            <param name="wkt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGIS.Projections.ICRSFactory.CreateCoordinateTrasformation(EGIS.Projections.ICRS,EGIS.Projections.ICRS)">
+            <summary>
+            Creates a CoordinateTransformation to transform coordinates from a source CRS to a target CRS
+            </summary>
+            <param name="source"></param>
+            <param name="target"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGIS.Projections.ICRSFactory.CreateCoordinateTrasformation(System.String,System.String)">
+            <summary>
+            Creates a CoordinateTransformation to transform coordinates from a source CRS WKT to a target CRS WKT
+            </summary>
+            <param name="sourceWKT"></param>
+            <param name="targetWKT"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EGIS.Projections.ICRSFactory.CreateCRSFromPrjFile(System.String)">
+            <summary>
+            Creates a Coordinate Reference System from an ESRI prj file
+            </summary>
+            <param name="prjFile"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EGIS.Projections.PJ_WKT_TYPE">
+            <summary>
+            Enumeration defining WKT type
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.PJ_WKT_TYPE.PJ_WKT2_2015">
+            <summary>
+            WKT2 2015 format        
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.PJ_WKT_TYPE.PJ_WKT2_2015_SIMPLIFIED">
+            <summary>
+            WKT2 simplified 2015 format
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.PJ_WKT_TYPE.PJ_WKT2_2018">
+            <summary>
+            WKT2 2018 format 
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.PJ_WKT_TYPE.PJ_WKT2_2018_SIMPLIFIED">
+            <summary>
+            WKT2 simplified 2018 format
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.PJ_WKT_TYPE.PJ_WKT1_GDAL">
+            <summary>
+            WKT1 GDAL format
+            </summary>
+        </member>
+        <member name="F:EGIS.Projections.PJ_WKT_TYPE.PJ_WKT1_ESRI">
+            <summary>
+            WKT1 ESRI format
+            </summary>
+        </member>
+        <member name="M:EGIS.Projections.Proj6.CoordinateTransformation.Clone">
+            <summary>
+            Clones the CoordinateTransformation. 
+            </summary>
+            <returns></returns>
+            <remarks>
+            <para>This method returns a new CoordinateTransformation which, like the source CoordinateTransformation, must be Disposed.</para>
+            </remarks>
+        </member>
+        <member name="M:EGIS.Projections.Proj6Native.proj_normalize_for_visualization(System.IntPtr,System.IntPtr)">
+            *
+        </member>
+        <member name="F:EGIS.Projections.Proj6Native.PJ_TYPE.PJ_TYPE_CRS">
+            Abstract type, not returned by proj_get_type() 
+        </member>
+        <member name="F:EGIS.Projections.Proj6Native.PJ_TYPE.PJ_TYPE_GEOGRAPHIC_CRS">
+            proj_get_type() will never return that type, but
+            PJ_TYPE_GEOGRAPHIC_2D_CRS or PJ_TYPE_GEOGRAPHIC_3D_CRS. 
+        </member>
+        <member name="F:EGIS.Projections.Proj6Native.PJ_COMPARISON_CRITERION.PJ_COMP_STRICT">
+            All properties are identical. 
+        </member>
+        <member name="F:EGIS.Projections.Proj6Native.PJ_COMPARISON_CRITERION.PJ_COMP_EQUIVALENT">
+            The objects are equivalent for the purpose of coordinate
+            operations. They can differ by the name of their objects,
+            identifiers, other metadata.
+            Parameters may be expressed in different units, provided that the
+            value is (with some tolerance) the same once expressed in a
+            common unit.
+        </member>
+        <member name="F:EGIS.Projections.Proj6Native.PJ_COMPARISON_CRITERION.PJ_COMP_EQUIVALENT_EXCEPT_AXIS_ORDER_GEOGCRS">
+            Same as EQUIVALENT, relaxed with an exception that the axis order
+            of the base CRS of a DerivedCRS/ProjectedCRS or the axis order of
+            a GeographicCRS is ignored. Only to be used
+            with DerivedCRS/ProjectedCRS/GeographicCRS 
+        </member>
+    </members>
+</doc>
