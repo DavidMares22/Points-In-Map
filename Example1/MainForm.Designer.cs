@@ -35,7 +35,7 @@ namespace Example1
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            //this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectRecordOnClickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawBoundingBoxOfSelectedRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,24 +64,18 @@ namespace Example1
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miOpen,
-            this.saveImageToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            //this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            //this.miOpen,
+            //this.saveImageToolStripMenuItem});
+            //this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            //this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            //this.fileToolStripMenuItem.Text = "File";
             // 
             // miOpen
-            // 
-            this.miOpen.Name = "miOpen";
-            this.miOpen.Size = new System.Drawing.Size(134, 22);
-            // 
-            // saveImageToolStripMenuItem
-            // 
-            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
-            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.saveImageToolStripMenuItem.Text = "Save Image";
-            this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
+            //// 
+            //this.miOpen.Name = "miOpen";
+            //this.miOpen.Size = new System.Drawing.Size(134, 22);
+          
             // 
             // optionsToolStripMenuItem
             // 
@@ -136,7 +130,7 @@ namespace Example1
             this.sfMap1.Margin = new System.Windows.Forms.Padding(0);
             this.sfMap1.MaxZoomLevel = 1.7976931348623157E+308D;
             this.sfMap1.MinZomLevel = 0D;
-            this.sfMap1.MouseWheelZoomMode = EGIS.Controls.MouseWheelZoomMode.Default;
+            //this.sfMap1.MouseWheelZoomMode = EGIS.Controls.MouseWheelZoomMode.Default;
             this.sfMap1.Name = "sfMap1";
             this.sfMap1.PanSelectMode = EGIS.Controls.PanSelectMode.Pan;
             this.sfMap1.RenderQuality = EGIS.ShapeFileLib.RenderQuality.Auto;
@@ -144,13 +138,14 @@ namespace Example1
             this.sfMap1.TabIndex = 0;
             this.sfMap1.UseMemoryStreams = false;
             this.sfMap1.UseMercatorProjection = false;
-            this.sfMap1.ZoomLevel = 1D;
-            this.sfMap1.ZoomToSelectedExtentWhenCtrlKeydown = false;
-            this.sfMap1.SelectedRecordsChanged += new System.EventHandler<System.EventArgs>(this.sfMap1_SelectedRecordsChanged);
+            this.sfMap1.MouseWheelZoomMode = EGIS.Controls.MouseWheelZoomMode.Disabled;
+            //this.sfMap1.ZoomLevel = 1D;
+            //this.sfMap1.ZoomToSelectedExtentWhenCtrlKeydown = false;
+            //this.sfMap1.SelectedRecordsChanged += new System.EventHandler<System.EventArgs>(this.sfMap1_SelectedRecordsChanged);
             this.sfMap1.Paint += new System.Windows.Forms.PaintEventHandler(this.sfMap1_Paint);
-            this.sfMap1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sfMap1_MouseDown);
-            this.sfMap1.MouseLeave += new System.EventHandler(this.sfMap1_MouseLeave);
-            this.sfMap1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.sfMap1_MouseMove);
+            //this.sfMap1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sfMap1_MouseDown);
+            //this.sfMap1.MouseLeave += new System.EventHandler(this.sfMap1_MouseLeave);
+            //this.sfMap1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.sfMap1_MouseMove);
             // 
             // statusStrip1
             // 

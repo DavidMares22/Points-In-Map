@@ -14,8 +14,33 @@ using System.Windows.Forms;
 
 namespace Example1
 {
+  
     public partial class MainForm : Form
     {
+
+        bool createPointsFlag = true;
+
+        List<Point> points = new List<Point>();
+
+        public Dictionary<int, System.Drawing.Brush> ColorsDict = new Dictionary<int, System.Drawing.Brush>()
+        {
+            {0, Brushes.Red },
+            {1, Brushes.Orange },
+            {2, Brushes.Yellow },
+            {3, Brushes.Green },
+            {4, Brushes.Blue },
+            {5, Brushes.Indigo },
+            {6, Brushes.Violet},
+            {7, Brushes.Brown },
+            {8, Brushes.Black },
+            {9, Brushes.White },
+            {10, Brushes.Gray },
+            {11, Brushes.Magenta },
+            {12, Brushes.Cyan },
+            {13, Brushes.Navy },
+            {14, Brushes.Teal },
+            {15, Brushes.Maroon }
+        };
         public MainForm()
         {
             InitializeComponent();
@@ -23,11 +48,8 @@ namespace Example1
 
             try
             {
-                // This will get the current WORKING directory (i.e. \bin\Debug)
                 string workingDirectory = Environment.CurrentDirectory;
-                // or: Directory.GetCurrentDirectory() gives the same result
 
-                // This will get the current PROJECT bin directory (ie ../bin/)
                 string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
 
 
@@ -40,7 +62,7 @@ namespace Example1
             }
 
 
-          
+
 
 
         }
@@ -87,9 +109,9 @@ namespace Example1
 
             this.sfMap1.MapCoordinateReferenceSystem = sf.CoordinateReferenceSystem;
 
-       
 
-            
+
+           
 
             //select the first record
             // sf.SelectRecord(0, true);
@@ -101,40 +123,42 @@ namespace Example1
         private void sfMap1_MouseDown(object sender, MouseEventArgs e)
         {
 
-            PointD myPoint = new PointD(200, 80);
-            var pt1 = sfMap1.PixelCoordToGisPoint(Convert.ToInt16(myPoint.X), Convert.ToInt16(myPoint.Y));
+           // PointD myPoint = new PointD(200, 80);
+           // var pt1 = sfMap1.PixelCoordToGisPoint(Convert.ToInt16(myPoint.X), Convert.ToInt16(myPoint.Y));
 
-           MessageBox.Show( sfMap1[0].GetShapeIndexContainingPoint(pt1, 1).ToString());
+           //MessageBox.Show( sfMap1[0].GetShapeIndexContainingPoint(pt1, 1).ToString());
 
 
-            if (sfMap1.ShapeFileCount == 0) return;
-            int recordIndex = sfMap1.GetShapeIndexAtPixelCoord(0, e.Location, 8);
+           // if (sfMap1.ShapeFileCount == 0) return;
+           // int recordIndex = sfMap1.GetShapeIndexAtPixelCoord(0, e.Location, 8);
            
-            if (recordIndex >= 0)
-            {
-                this.selectedRecordIndex = recordIndex;
+           // if (recordIndex >= 0)
+           // {
+           //     this.selectedRecordIndex = recordIndex;
 
-                if (displayAttributesOnClickToolStripMenuItem.Checked)
-                {
-                    string[] recordAttributes = sfMap1[0].GetAttributeFieldValues(recordIndex);
-                    string[] attributeNames = sfMap1[0].GetAttributeFieldNames();
-                    StringBuilder sb = new StringBuilder();
-                    for (int n = 0; n < attributeNames.Length; ++n)
-                    {
-                        sb.Append(attributeNames[n]).Append(':').AppendLine(recordAttributes[n].Trim());
-                    }
-                    MessageBox.Show(this, sb.ToString(), "record attributes", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-                }
-                if (selectRecordOnClickToolStripMenuItem.Checked)
-                {
+           //     if (displayAttributesOnClickToolStripMenuItem.Checked)
+           //     {
+           //         string[] recordAttributes = sfMap1[0].GetAttributeFieldValues(recordIndex);
+           //         string[] attributeNames = sfMap1[0].GetAttributeFieldNames();
+           //         StringBuilder sb = new StringBuilder();
+           //         for (int n = 0; n < attributeNames.Length; ++n)
+           //         {
+           //             sb.Append(attributeNames[n]).Append(':').AppendLine(recordAttributes[n].Trim());
+           //         }
+           //         MessageBox.Show(this, sb.ToString(), "record attributes", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+           //     }
+           //     if (selectRecordOnClickToolStripMenuItem.Checked)
+           //     {
                     
-                    sfMap1[0].ClearSelectedRecords();
-                    sfMap1[0].SelectRecord(recordIndex, true);
-                    sfMap1.Refresh(true);
-                }
+           //         sfMap1[0].ClearSelectedRecords();
+           //         sfMap1[0].SelectRecord(recordIndex, true);
+           //         sfMap1.Refresh(true);
+           //     }
 
-            }
+           // }
            
+
+
 
         }
 
@@ -142,13 +166,53 @@ namespace Example1
         {
 
             // Create a Graphics object and a Pen object
-       
-            using (Pen p = new Pen(Brushes.Black,2))
-            {
-           
-                e.Graphics.DrawEllipse(p, 200, 80, 1, 1);
 
+            if (createPointsFlag)
+            {
+
+
+
+             
+
+                var random = new Random();
+
+                for (int i = 0; i < 100; i++)
+
+                {
+
+                    double x = random.NextDouble() * (sfMap1[0].Extent.Width - sfMap1[0].Extent.X) + sfMap1[0].Extent.X;
+
+                    double y = random.NextDouble() * (sfMap1[0].Extent.Height - sfMap1[0].Extent.Y) + sfMap1[0].Extent.Y;
+
+
+                    var point = sfMap1.GisPointToPixelCoord(x, y);
+                    points.Add(point);
+
+                }
+                createPointsFlag = false;
             }
+
+            foreach (var item in points)
+                {
+
+                var brushColor = Brushes.Yellow;
+                var pt1 = sfMap1.PixelCoordToGisPoint(Convert.ToInt16(item.X), Convert.ToInt16(item.Y));
+                var index = sfMap1[0].GetShapeIndexContainingPoint(pt1, 1);
+                if(index >= 0)
+                {
+                    brushColor = ColorsDict[index];
+                }
+
+                using (Pen p = new Pen(brushColor, 2))
+                    {
+
+                        e.Graphics.DrawEllipse(p, Convert.ToInt32(item.X), Convert.ToInt32(item.Y), 1, 1);
+
+                    }
+
+                }
+         
+
 
             DrawCursorCrosshair(e.Graphics);
 
@@ -249,15 +313,15 @@ namespace Example1
 
 		private void sfMap1_MouseMove(object sender, MouseEventArgs e)
 		{
-            label1.Text = "X " + e.X + "Y " + e.Y;
+            //label1.Text = "X " + e.X + "Y " + e.Y;
             currentMousePoint = e.Location;
-            sfMap1.Refresh();            
-		}
+            //sfMap1.Refresh();
+        }
 
 		private void sfMap1_MouseLeave(object sender, EventArgs e)
 		{
             currentMousePoint = Point.Empty;
-            sfMap1.Refresh();
+            //sfMap1.Refresh();
         }
 
 		private void selectRecordOnClickToolStripMenuItem_Click(object sender, EventArgs e)
@@ -276,16 +340,7 @@ namespace Example1
             //if (e.Control || e.Shift) e.Handled = true;
 		}
 
-		private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-            using (var bm = this.sfMap1.GetBitmap())
-            {
-                Console.Out.WriteLine("Size:" + sfMap1.Size);
-                Console.Out.WriteLine("clientSize:" + sfMap1.ClientSize);
-                Console.Out.WriteLine("bm.Size:" + bm.Size);
-                bm.Save(@"c:\temp\test.png", System.Drawing.Imaging.ImageFormat.Png);
-            }
-		}
+		
 
 		private void sfMap1_SelectedRecordsChanged(object sender, EventArgs e)
 		{
