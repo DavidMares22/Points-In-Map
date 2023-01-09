@@ -41,6 +41,27 @@ namespace Example1
             {14, Brushes.Teal },
             {15, Brushes.Maroon }
         };
+
+        public Dictionary<int, List<Point>> RegionsDict = new Dictionary<int, List<Point>>()
+        {
+            {0, new List<Point>() },
+            {1, new List<Point>()},
+            {2, new List<Point>()},
+            {3, new List<Point>()},
+            {4, new List<Point>()},
+            {5, new List<Point>()},
+            {6, new List<Point>()},
+            {7, new List<Point>()},
+            {8, new List<Point>()},
+            {9, new List<Point>()},
+              {10, new List<Point>()},
+              {11, new List<Point>()},
+              {12, new List<Point>()},
+              {13, new List<Point>()},
+              {14, new List<Point>()},
+              {15, new List<Point>()}
+
+        };
         public MainForm()
         {
             InitializeComponent();
@@ -143,13 +164,21 @@ namespace Example1
                         sb.Append(attributeNames[n]).Append(':').AppendLine(recordAttributes[n].Trim());
                     }
                     MessageBox.Show(this, sb.ToString(), "record attributes", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+               
+                StringBuilder sbForPoints = new StringBuilder();
+                foreach (var item in RegionsDict[recordIndex])
+                {
+                    sbForPoints.Append(item);
                 }
+                MessageBox.Show(this, sbForPoints.ToString(), $"Points in region: {recordAttributes[4]}", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+
+            }
                 if (selectRecordOnClickToolStripMenuItem.Checked)
                 {
 
                     sfMap1[0].ClearSelectedRecords();
                     sfMap1[0].SelectRecord(recordIndex, true);
-                    sfMap1.Refresh(true);
+                    //sfMap1.Refresh(true);
                 }
 
             //}
@@ -188,19 +217,24 @@ namespace Example1
                 }
                 createPointsFlag = false;
             }
-
-            foreach (var item in points)
+            if (RegionsDict[1].Count < 1)
+            {
+                foreach (var item in points)
                 {
 
-                var brushColor = Brushes.Yellow;
-                var pt1 = sfMap1.PixelCoordToGisPoint(Convert.ToInt16(item.X), Convert.ToInt16(item.Y));
-                var index = sfMap1[0].GetShapeIndexContainingPoint(pt1, 1);
-                if(index >= 0)
-                {
-                    brushColor = ColorsDict[index];
-                }
+                    var brushColor = Brushes.Yellow;
+                    var pt1 = sfMap1.PixelCoordToGisPoint(Convert.ToInt16(item.X), Convert.ToInt16(item.Y));
+                    var index = sfMap1[0].GetShapeIndexContainingPoint(pt1, 1);
+                    if (index >= 0)
+                    {
+                        brushColor = ColorsDict[index];
 
-                using (Pen p = new Pen(brushColor, 2))
+
+                        RegionsDict[index].Add(item);
+
+                    }
+
+                    using (Pen p = new Pen(brushColor, 2))
                     {
 
                         e.Graphics.DrawEllipse(p, Convert.ToInt32(item.X), Convert.ToInt32(item.Y), 1, 1);
@@ -208,7 +242,7 @@ namespace Example1
                     }
 
                 }
-         
+            }
 
 
             DrawCursorCrosshair(e.Graphics);
@@ -312,13 +346,13 @@ namespace Example1
 		{
             //label1.Text = "X " + e.X + "Y " + e.Y;
             currentMousePoint = e.Location;
-            sfMap1.Refresh();
+            //sfMap1.Refresh();
         }
 
 		private void sfMap1_MouseLeave(object sender, EventArgs e)
 		{
             currentMousePoint = Point.Empty;
-            sfMap1.Refresh();
+            //sfMap1.Refresh();
         }
 
 		private void selectRecordOnClickToolStripMenuItem_Click(object sender, EventArgs e)
