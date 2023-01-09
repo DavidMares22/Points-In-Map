@@ -2,4 +2,4 @@
 
 
 Points in regions of Poland
-[![name](https://raw.githubusercontent.com/DavidMares22/Points-In-Map/Screenshots/regions.JPG)] 
+[![name](https://raw.githubusercontent.com/DavidMares22/Points-In-Map/main/Screenshots/regions.JPG)] 
