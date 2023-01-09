@@ -34,17 +34,15 @@ namespace Example1
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.miOpen = new System.Windows.Forms.ToolStripMenuItem();
-            //this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectRecordOnClickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawBoundingBoxOfSelectedRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displayAttributesOnClickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.ofdShapefile = new System.Windows.Forms.OpenFileDialog();
             this.sfMap1 = new EGIS.Controls.SFMap();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -64,18 +62,8 @@ namespace Example1
             // 
             // fileToolStripMenuItem
             // 
-            //this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            //this.miOpen,
-            //this.saveImageToolStripMenuItem});
-            //this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            //this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            //this.fileToolStripMenuItem.Text = "File";
-            // 
-            // miOpen
-            //// 
-            //this.miOpen.Name = "miOpen";
-            //this.miOpen.Size = new System.Drawing.Size(134, 22);
-          
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(12, 20);
             // 
             // optionsToolStripMenuItem
             // 
@@ -113,6 +101,11 @@ namespace Example1
             this.displayAttributesOnClickToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.displayAttributesOnClickToolStripMenuItem.Text = "Display Attributes On Click";
             // 
+            // miOpen
+            // 
+            this.miOpen.Name = "miOpen";
+            this.miOpen.Size = new System.Drawing.Size(32, 19);
+            // 
             // ofdShapefile
             // 
             this.ofdShapefile.Filter = "ESRI ShapeFile|*.shp";
@@ -130,7 +123,7 @@ namespace Example1
             this.sfMap1.Margin = new System.Windows.Forms.Padding(0);
             this.sfMap1.MaxZoomLevel = 1.7976931348623157E+308D;
             this.sfMap1.MinZomLevel = 0D;
-            //this.sfMap1.MouseWheelZoomMode = EGIS.Controls.MouseWheelZoomMode.Default;
+            this.sfMap1.MouseWheelZoomMode = EGIS.Controls.MouseWheelZoomMode.Disabled;
             this.sfMap1.Name = "sfMap1";
             this.sfMap1.PanSelectMode = EGIS.Controls.PanSelectMode.Pan;
             this.sfMap1.RenderQuality = EGIS.ShapeFileLib.RenderQuality.Auto;
@@ -138,14 +131,9 @@ namespace Example1
             this.sfMap1.TabIndex = 0;
             this.sfMap1.UseMemoryStreams = false;
             this.sfMap1.UseMercatorProjection = false;
-            this.sfMap1.MouseWheelZoomMode = EGIS.Controls.MouseWheelZoomMode.Disabled;
-            //this.sfMap1.ZoomLevel = 1D;
-            //this.sfMap1.ZoomToSelectedExtentWhenCtrlKeydown = false;
-            //this.sfMap1.SelectedRecordsChanged += new System.EventHandler<System.EventArgs>(this.sfMap1_SelectedRecordsChanged);
+            this.sfMap1.ZoomLevel = 1D;
+            this.sfMap1.ZoomToSelectedExtentWhenCtrlKeydown = false;
             this.sfMap1.Paint += new System.Windows.Forms.PaintEventHandler(this.sfMap1_Paint);
-            //this.sfMap1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sfMap1_MouseDown);
-            //this.sfMap1.MouseLeave += new System.EventHandler(this.sfMap1_MouseLeave);
-            //this.sfMap1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.sfMap1_MouseMove);
             // 
             // statusStrip1
             // 
@@ -163,21 +151,11 @@ namespace Example1
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(132, 434);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "label1";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(783, 447);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.sfMap1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -210,7 +188,6 @@ namespace Example1
 		private System.Windows.Forms.ToolStripMenuItem drawBoundingBoxOfSelectedRecordToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem displayAttributesOnClickToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveImageToolStripMenuItem;
-        private Label label1;
     }
 }
 

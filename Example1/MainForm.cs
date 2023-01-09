@@ -25,18 +25,18 @@ namespace Example1
         public Dictionary<int, System.Drawing.Brush> ColorsDict = new Dictionary<int, System.Drawing.Brush>()
         {
             {0, Brushes.Red },
-            {1, Brushes.Orange },
-            {2, Brushes.Yellow },
-            {3, Brushes.Green },
+            {1, Brushes.DeepPink },
+            {2, Brushes.Purple },
+            {3, Brushes.Gold },
             {4, Brushes.Blue },
-            {5, Brushes.Indigo },
-            {6, Brushes.Violet},
-            {7, Brushes.Brown },
+            {5, Brushes.YellowGreen },
+            {6, Brushes.SeaGreen},
+            {7, Brushes.Teal },
             {8, Brushes.Black },
-            {9, Brushes.White },
+            {9, Brushes.MediumVioletRed },
             {10, Brushes.Gray },
             {11, Brushes.Magenta },
-            {12, Brushes.Cyan },
+            {12, Brushes.Turquoise },
             {13, Brushes.Navy },
             {14, Brushes.Teal },
             {15, Brushes.Maroon }
@@ -123,40 +123,37 @@ namespace Example1
         private void sfMap1_MouseDown(object sender, MouseEventArgs e)
         {
 
-           // PointD myPoint = new PointD(200, 80);
-           // var pt1 = sfMap1.PixelCoordToGisPoint(Convert.ToInt16(myPoint.X), Convert.ToInt16(myPoint.Y));
-
-           //MessageBox.Show( sfMap1[0].GetShapeIndexContainingPoint(pt1, 1).ToString());
 
 
-           // if (sfMap1.ShapeFileCount == 0) return;
-           // int recordIndex = sfMap1.GetShapeIndexAtPixelCoord(0, e.Location, 8);
-           
-           // if (recordIndex >= 0)
-           // {
-           //     this.selectedRecordIndex = recordIndex;
 
-           //     if (displayAttributesOnClickToolStripMenuItem.Checked)
-           //     {
-           //         string[] recordAttributes = sfMap1[0].GetAttributeFieldValues(recordIndex);
-           //         string[] attributeNames = sfMap1[0].GetAttributeFieldNames();
-           //         StringBuilder sb = new StringBuilder();
-           //         for (int n = 0; n < attributeNames.Length; ++n)
-           //         {
-           //             sb.Append(attributeNames[n]).Append(':').AppendLine(recordAttributes[n].Trim());
-           //         }
-           //         MessageBox.Show(this, sb.ToString(), "record attributes", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-           //     }
-           //     if (selectRecordOnClickToolStripMenuItem.Checked)
-           //     {
-                    
-           //         sfMap1[0].ClearSelectedRecords();
-           //         sfMap1[0].SelectRecord(recordIndex, true);
-           //         sfMap1.Refresh(true);
-           //     }
+            if (sfMap1.ShapeFileCount == 0) return;
+            int recordIndex = sfMap1.GetShapeIndexAtPixelCoord(0, e.Location, 8);
 
-           // }
-           
+            if (recordIndex >= 0)
+            {
+                this.selectedRecordIndex = recordIndex;
+
+                if (displayAttributesOnClickToolStripMenuItem.Checked)
+                {
+                    string[] recordAttributes = sfMap1[0].GetAttributeFieldValues(recordIndex);
+                    string[] attributeNames = sfMap1[0].GetAttributeFieldNames();
+                    StringBuilder sb = new StringBuilder();
+                    for (int n = 0; n < attributeNames.Length; ++n)
+                    {
+                        sb.Append(attributeNames[n]).Append(':').AppendLine(recordAttributes[n].Trim());
+                    }
+                    MessageBox.Show(this, sb.ToString(), "record attributes", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+                }
+                if (selectRecordOnClickToolStripMenuItem.Checked)
+                {
+
+                    sfMap1[0].ClearSelectedRecords();
+                    sfMap1[0].SelectRecord(recordIndex, true);
+                    sfMap1.Refresh(true);
+                }
+
+            }
+
 
 
 
@@ -176,13 +173,13 @@ namespace Example1
 
                 var random = new Random();
 
-                for (int i = 0; i < 100; i++)
+                for (int i = 0; i < 1000; i++)
 
                 {
 
-                    double x = random.NextDouble() * (sfMap1[0].Extent.Width - sfMap1[0].Extent.X) + sfMap1[0].Extent.X;
+                    double x = random.NextDouble() * (sfMap1[0].Extent.Width ) + sfMap1[0].Extent.X;
 
-                    double y = random.NextDouble() * (sfMap1[0].Extent.Height - sfMap1[0].Extent.Y) + sfMap1[0].Extent.Y;
+                    double y = random.NextDouble() * (sfMap1[0].Extent.Height) + sfMap1[0].Extent.Y;
 
 
                     var point = sfMap1.GisPointToPixelCoord(x, y);
@@ -230,9 +227,9 @@ namespace Example1
                     bounds = transform.Transform(bounds);
                 }
 
-                //Console.Out.WriteLine("bounds = " + bounds);
-               // ReadOnlyCollection<PointD[]> geometry = sfMap1[0].GetShapeDataD(selectedRecordIndex);
-               // OutputRecordGeometry(geometry);
+                Console.Out.WriteLine("bounds = " + bounds);
+                ReadOnlyCollection<PointD[]> geometry = sfMap1[0].GetShapeDataD(selectedRecordIndex);
+                OutputRecordGeometry(geometry);
 
                 var pt1 = sfMap1.GisPointToPixelCoord(new PointD(bounds.Left, bounds.Bottom));
                 var pt2 = sfMap1.GisPointToPixelCoord(new PointD(bounds.Right, bounds.Top));
