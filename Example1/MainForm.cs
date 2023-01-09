@@ -133,8 +133,8 @@ namespace Example1
             {
                 this.selectedRecordIndex = recordIndex;
 
-                if (displayAttributesOnClickToolStripMenuItem.Checked)
-                {
+                //if (displayAttributesOnClickToolStripMenuItem.Checked)
+                //{
                     string[] recordAttributes = sfMap1[0].GetAttributeFieldValues(recordIndex);
                     string[] attributeNames = sfMap1[0].GetAttributeFieldNames();
                     StringBuilder sb = new StringBuilder();
@@ -152,7 +152,7 @@ namespace Example1
                     sfMap1.Refresh(true);
                 }
 
-            }
+            //}
 
 
 
@@ -312,13 +312,13 @@ namespace Example1
 		{
             //label1.Text = "X " + e.X + "Y " + e.Y;
             currentMousePoint = e.Location;
-            //sfMap1.Refresh();
+            sfMap1.Refresh();
         }
 
 		private void sfMap1_MouseLeave(object sender, EventArgs e)
 		{
             currentMousePoint = Point.Empty;
-            //sfMap1.Refresh();
+            sfMap1.Refresh();
         }
 
 		private void selectRecordOnClickToolStripMenuItem_Click(object sender, EventArgs e)

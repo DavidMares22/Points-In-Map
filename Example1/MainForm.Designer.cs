@@ -134,6 +134,9 @@ namespace Example1
             this.sfMap1.ZoomLevel = 1D;
             this.sfMap1.ZoomToSelectedExtentWhenCtrlKeydown = false;
             this.sfMap1.Paint += new System.Windows.Forms.PaintEventHandler(this.sfMap1_Paint);
+            this.sfMap1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sfMap1_MouseDown);
+            this.sfMap1.MouseLeave += new System.EventHandler(this.sfMap1_MouseLeave);
+            //this.sfMap1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.sfMap1_MouseMove);
             // 
             // statusStrip1
             // 
